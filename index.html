@@ -15,20 +15,29 @@
 
 <h1>Welcome to Your Website</h1>
 
-<!-- Your existing HTML content goes here -->
-
 <!-- Login Form -->
 <form id="loginForm">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required><br>
+    <label for="loginEmail">Email:</label>
+    <input type="email" id="loginEmail" name="loginEmail" required><br>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br>
+    <label for="loginPassword">Password:</label>
+    <input type="password" id="loginPassword" name="loginPassword" required><br>
 
     <button type="button" onclick="login()">Login</button>
 </form>
 
-<!-- Firebase Configuration and Login Function -->
+<!-- Signup Form -->
+<form id="signupForm">
+    <label for="signupEmail">Email:</label>
+    <input type="email" id="signupEmail" name="signupEmail" required><br>
+
+    <label for="signupPassword">Password:</label>
+    <input type="password" id="signupPassword" name="signupPassword" required><br>
+
+    <button type="button" onclick="signup()">Sign Up</button>
+</form>
+
+<!-- Firebase Configuration and Login/Signup Functions -->
 <script>
   const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
@@ -44,8 +53,8 @@
 
   // Function to handle login
   function login() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
 
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
@@ -59,6 +68,26 @@
         const errorMessage = error.message;
         console.error('Login error:', errorCode, errorMessage);
         alert('Login failed. Check your email and password.');
+      });
+  }
+
+  // Function to handle signup
+  function signup() {
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        console.log('Signed up as:', user.email);
+        alert('Sign up successful!');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error('Sign up error:', errorCode, errorMessage);
+        alert('Sign up failed. Check your email and password.');
       });
   }
 </script>
