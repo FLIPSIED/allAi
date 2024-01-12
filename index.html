@@ -1,1 +1,126 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .login-container {
+            max-width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <title>Login Page</title>
+</head>
+<body>
+    <div class="login-container">
+        <form id="loginForm" onsubmit="login(event)">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <div id="signupForm" class="hidden">
+            <h2>Sign Up</h2>
+            <form onsubmit="signup(event)">
+                <label for="newUsername">New Username:</label>
+                <input type="text" id="newUsername" name="newUsername" required>
+
+                <label for="newPassword">New Password:</label>
+                <input type="password" id="newPassword" name="newPassword" required>
+
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="welcomeContent" class="hidden">
+        <h2>Welcome!</h2>
+        <!-- Additional content for authenticated users goes here -->
+    </div>
+
+    <script>
+        var hardcodedCredentials = [
+            { username: "user1", password: "password1" },
+            { username: "user2", password: "password2" },
+            { username: "user3", password: "password3" }
+        ];
+
+        function login(event) {
+            event.preventDefault();
+
+            // Get username and password from the form
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Check if the provided credentials are valid
+            var isValidCredentials = hardcodedCredentials.some(function (creds) {
+                return creds.username === username && creds.password === password;
+            });
+
+            if (isValidCredentials) {
+                // Redirect to a welcome page or show additional content
+                document.getElementById("loginForm").classList.add("hidden");
+                document.getElementById("signupForm").classList.add("hidden");
+                document.getElementById("welcomeContent").classList.remove("hidden");
+            } else {
+                // Display an error message
+                alert("Invalid username or password");
+            }
+        }
+
+        function signup(event) {
+            event.preventDefault();
+
+            // Get new username and password from the form
+            var newUsername = document.getElementById("newUsername").value;
+            var newPassword = document.getElementById("newPassword").value;
+
+            // For simplicity, let's just log the new credentials
+            console.log("New Username:", newUsername);
+            console.log("New Password:", newPassword);
+
+            // You can add logic to store the new credentials (e.g., in a database)
+        }
+    </script>
+</body>
+</html>
